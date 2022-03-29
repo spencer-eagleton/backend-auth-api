@@ -14,7 +14,7 @@ describe('backend-auth-api routes', () => {
 
   it('creates a new user', async () => {
     const res = await request(app)
-      .post('/api/v1/users/signup')
+      .post('/api/v1/users')
       .send({ username: 'max', password: 'ballislife' });
 
     expect(res.body).toEqual({ id: expect.any(String), username: 'max' });
