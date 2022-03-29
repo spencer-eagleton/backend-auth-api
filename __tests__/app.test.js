@@ -11,4 +11,12 @@ describe('backend-auth-api routes', () => {
   afterAll(() => {
     pool.end();
   });
+
+  it('creates a new user', async () => {
+    const res = await request(app)
+      .post('/api/v1/users/signup')
+      .send({ username: 'max', password: 'ballislife' });
+
+    expect(res.body).toEqual({ id: expect.any(String), username: 'max' });
+  });
 });
