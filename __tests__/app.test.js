@@ -60,7 +60,6 @@ describe('backend-auth-api routes', () => {
       password: 'ilovelamp',
     });
 
- 
     let res = await agent.get('/api/v1/secrets');
     expect(res.status).toEqual(401);
 
@@ -70,5 +69,33 @@ describe('backend-auth-api routes', () => {
 
     res = await agent.get('/api/v1/secrets');
     expect(res.status).toEqual(200);
+  });
+
+  it('should allow a logged in user to create a secret', async () => {
+    const agent = request.agent(app);
+
+    await UserService.create({
+      username: 'Spencer',
+      password: 'ilovelamp',
+    });
+
+    let res = await agent
+      .post('/api/v1/users/session')
+      .send({ username: 'Spencer', password: 'ilovelamp' });
+
+    res = await agent.post('/api/v1/secrets').send({
+      userId: '1',
+      title: 'Spencers big secret',
+      description: 'I loooove lamp',
+      createdAt: expect.any(String)
+    });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      title: 'Spencers big secret',
+      description: 'I loooove lamp',
+      createdAt: expect.any(String),
+      userId: '1',
+    });
   });
 });
