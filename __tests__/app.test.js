@@ -86,14 +86,14 @@ describe('backend-auth-api routes', () => {
     res = await agent.post('/api/v1/secrets').send({
       userId: '1',
       title: 'Spencers big secret',
-      description: 'I loooove lamp',
+      description: 'I looove lamp',
       createdAt: expect.any(String)
     });
 
     expect(res.body).toEqual({
       id: expect.any(String),
       title: 'Spencers big secret',
-      description: 'I loooove lamp',
+      description: 'I looove lamp',
       createdAt: expect.any(String),
       userId: '1',
     });
